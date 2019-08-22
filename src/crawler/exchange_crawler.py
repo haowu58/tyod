@@ -20,6 +20,7 @@ def write_to_file(json):
     with open(filename, 'a+') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=filednames)
         writer.writerow(json)
+    csvfile.close()
 
 
 def get_exchange_rate(index):
@@ -34,8 +35,8 @@ if __name__ == '__main__':
         writer = csv.DictWriter(csvfile, fieldnames=filednames)
         writer.writeheader()
         counter = 0
+    csvfile.close()
     while True:
         get_exchange_rate(counter)
         counter = counter + 1
         time.sleep(1800)
-
