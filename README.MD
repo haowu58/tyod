@@ -11,7 +11,8 @@
 ### Preprocess data and find out paris
 
     1. 3 major trading time/locations -> pairs
-    2. NEED MORE CONTEXT ON FOREIGN CURRENCY TRADING
+    2. Further understanding of dataset from CITI bank.
+    3. NEED MORE CONTEXT ON FOREIGN CURRENCY TRADING
     
 ### Traditional strategies
     1. MACD (移动平均线线交易)
