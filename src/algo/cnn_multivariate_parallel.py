@@ -1,7 +1,8 @@
 # multivariate output 1d cnn example
 from numpy import array
 from numpy import hstack
-from keras.models import Sequential
+from keras.models import Model
+from keras.layers import Input
 from keras.layers import Dense
 from keras.layers import Flatten
 from keras.layers.convolutional import Conv1D
@@ -40,17 +41,27 @@ n_steps = 3
 X, y = split_sequences(dataset, n_steps)
 # the dataset knows the number of features, e.g. 2
 n_features = X.shape[2]
+# separate output
+y1 = y[:, 0].reshape((y.shape[0], 1))
+y2 = y[:, 1].reshape((y.shape[0], 1))
+y3 = y[:, 2].reshape((y.shape[0], 1))
 # define model
-model = Sequential()
-model.add(Conv1D(filters=64, kernel_size=2, activation='relu',
-                 input_shape=(n_steps, n_features)))
-model.add(MaxPooling1D(pool_size=2))
-model.add(Flatten())
-model.add(Dense(50, activation='relu'))
-model.add(Dense(n_features))
+visible = Input(shape=(n_steps, n_features))
+cnn = Conv1D(filters=64, kernel_size=2, activation='relu')(visible)
+cnn = MaxPooling1D(pool_size=2)(cnn)
+cnn = Flatten()(cnn)
+cnn = Dense(50, activation='relu')(cnn)
+# define output 1
+output1 = Dense(1)(cnn)
+# define output 2
+output2 = Dense(1)(cnn)
+# define output 3
+output3 = Dense(1)(cnn)
+# tie together
+model = Model(inputs=visible, outputs=[output1, output2, output3])
 model.compile(optimizer='adam', loss='mse')
 # fit model
-model.fit(X, y, epochs=3000, verbose=0)
+model.fit(X, [y1, y2, y3], epochs=2000, verbose=0)
 # demonstrate prediction
 x_input = array([[70, 75, 145], [80, 85, 165], [90, 95, 185]])
 x_input = x_input.reshape((1, n_steps, n_features))
