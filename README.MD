@@ -35,6 +35,7 @@ https://www.sciencedirect.com/science/article/pii/S1877050919302066
 ### Rooad Map Overview
     1. Find a mixed profittable model
     2. potential to grow into A to A or even B to B platform
+    3. prepare BP
     
 
 
